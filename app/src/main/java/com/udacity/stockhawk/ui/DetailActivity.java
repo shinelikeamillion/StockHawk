@@ -150,11 +150,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             axisX.setMaxLabelChars(8);
             Axis axisY = new Axis(axisYValues);
 
-            if (hasAxesName) {
-                axisX.setName("date");
-                axisY.setName("price");
-            }
-
             axisY.setHasLines(true);
 
             data.setAxisXBottom(axisX);

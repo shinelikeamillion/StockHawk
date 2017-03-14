@@ -30,6 +30,8 @@ public class AddStockDialog extends DialogFragment {
     @BindView(R.id.dialog_stock)
     EditText stock;
 
+    public static final int MSG_WHAT_STOCK_NOT_EXIST = 0x11;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -69,7 +71,8 @@ public class AddStockDialog extends DialogFragment {
     }
 
     private void addStock() {
-       final String stockSymbol = stock.getText().toString();
+        final String stockSymbol = stock.getText().toString();
+        final Activity parent = getActivity();
 
         new Thread(){
             @Override
@@ -79,7 +82,7 @@ public class AddStockDialog extends DialogFragment {
                     if (sk.getQuote().getPrice() == null) {
                         Timber.e("there is a null");
                         stock.clearComposingText();
-                        return;
+                        ((MainActivity) parent).addStockHandler.sendEmptyMessage(MSG_WHAT_STOCK_NOT_EXIST);
                     }
                 } catch (IOException e) {
                     Timber.e(e, "get stock error");
@@ -89,10 +92,9 @@ public class AddStockDialog extends DialogFragment {
             }
         }.start();
 
-        Activity parent = getActivity();
-        if (parent instanceof MainActivity) {
-            ((MainActivity) parent).addStock(stockSymbol);
-        }
+//        if (parent instanceof MainActivity) {
+//            ((MainActivity) parent).addStock(stockSymbol);
+//        }
 
         dismissAllowingStateLoss();
     }
