@@ -28,11 +28,13 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
-
-import static com.udacity.stockhawk.ui.AddStockDialog.MSG_WHAT_STOCK_NOT_EXIST;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -47,12 +49,33 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TextView error;
     private StockAdapter adapter;
 
+    public static final int MSG_WHAT_STOCK_NOT_EXIST = 0x01;
+    public static final int MSG_WHAT_ADD_STOCK = 0X02;
+
     Handler addStockHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == MSG_WHAT_STOCK_NOT_EXIST) {
-                Toast.makeText(getApplication(), "what you found not exist", Toast.LENGTH_SHORT).show();
+
+            switch (msg.what) {
+                case MSG_WHAT_STOCK_NOT_EXIST: {
+                    Toast.makeText(MainActivity.this, "what you found not exist", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                case MSG_WHAT_ADD_STOCK:{
+
+                    String symbol = String.valueOf(msg.obj);
+                    if (networkUp()) {
+                        swipeRefreshLayout.setRefreshing(true);
+                    } else {
+                        String message = getString(R.string.toast_stock_added_no_connectivity, symbol);
+                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+
+                    PrefUtils.addStock(MainActivity.this, symbol);
+                    QuoteSyncJob.syncImmediately(MainActivity.this);
+                    break;
+                }
             }
         }
     };
@@ -132,18 +155,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
     }
 
-    void addStock(String symbol) {
+    void addStock(final String symbol) {
         if (symbol != null && !symbol.isEmpty()) {
 
-            if (networkUp()) {
-                swipeRefreshLayout.setRefreshing(true);
-            } else {
-                String message = getString(R.string.toast_stock_added_no_connectivity, symbol);
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        Stock sk = YahooFinance.get(symbol);
+                        if (sk.getQuote().getPrice() == null) {
+                            Timber.e("there is a null");
+                            addStockHandler.sendEmptyMessage(MSG_WHAT_STOCK_NOT_EXIST);
+                        } else {
+                            Message msg = addStockHandler.obtainMessage();
+                            msg.what = MSG_WHAT_ADD_STOCK;
+                            msg.obj = symbol;
+                            msg.sendToTarget();
+                        }
+                    } catch (IOException e) {
+                        Timber.e(e, "get stock error");
+                        e.printStackTrace();
+                    }
 
-            PrefUtils.addStock(this, symbol);
-            QuoteSyncJob.syncImmediately(this);
+                }
+            }.start();
+
         }
     }
 

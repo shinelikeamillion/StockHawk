@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.StockHistories;
-import com.udacity.stockhawk.Utilities;
+import com.udacity.stockhawk.utilities.Utilities;
 import com.udacity.stockhawk.data.Contract.Quote;
 
 import java.util.ArrayList;

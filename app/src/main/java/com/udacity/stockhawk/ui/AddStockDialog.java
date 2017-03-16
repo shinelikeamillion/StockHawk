@@ -9,20 +9,17 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.udacity.stockhawk.R;
-
-import java.io.IOException;
+import com.udacity.stockhawk.utilities.CircularRevealAnimation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 
 public class AddStockDialog extends DialogFragment {
@@ -30,7 +27,20 @@ public class AddStockDialog extends DialogFragment {
     @BindView(R.id.dialog_stock)
     EditText stock;
 
-    public static final int MSG_WHAT_STOCK_NOT_EXIST = 0x11;
+    private CircularRevealAnimation mCircularRevealAnimation;
+
+    private void initAnim (final View animView) {
+        mCircularRevealAnimation = new CircularRevealAnimation();
+
+        stock.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                stock.getViewTreeObserver().removeOnPreDrawListener(this);
+                mCircularRevealAnimation.show(animView.getRootView());
+                return true;
+            }
+        });
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,7 +49,6 @@ public class AddStockDialog extends DialogFragment {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View custom = inflater.inflate(R.layout.add_stock_dialog, null);
-
         ButterKnife.bind(this, custom);
 
         stock.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -62,6 +71,8 @@ public class AddStockDialog extends DialogFragment {
 
         Dialog dialog = builder.create();
 
+        initAnim(custom);
+
         Window window = dialog.getWindow();
         if (window != null) {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -71,33 +82,12 @@ public class AddStockDialog extends DialogFragment {
     }
 
     private void addStock() {
-        final String stockSymbol = stock.getText().toString();
-        final Activity parent = getActivity();
+        Activity parent = getActivity();
 
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    Stock sk = YahooFinance.get(stockSymbol);
-                    if (sk.getQuote().getPrice() == null) {
-                        Timber.e("there is a null");
-                        stock.clearComposingText();
-                        ((MainActivity) parent).addStockHandler.sendEmptyMessage(MSG_WHAT_STOCK_NOT_EXIST);
-                    }
-                } catch (IOException e) {
-                    Timber.e(e, "get stock error");
-                    e.printStackTrace();
-                }
-
-            }
-        }.start();
-
-//        if (parent instanceof MainActivity) {
-//            ((MainActivity) parent).addStock(stockSymbol);
-//        }
+        if (parent instanceof MainActivity) {
+            ((MainActivity) parent).addStock(stock.getText().toString());
+        }
 
         dismissAllowingStateLoss();
     }
-
-
 }

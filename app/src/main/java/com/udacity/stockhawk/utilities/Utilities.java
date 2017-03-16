@@ -1,4 +1,6 @@
-package com.udacity.stockhawk;
+package com.udacity.stockhawk.utilities;
+
+import com.udacity.stockhawk.StockHistories;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
