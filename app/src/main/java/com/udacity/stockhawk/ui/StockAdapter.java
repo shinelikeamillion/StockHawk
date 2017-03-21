@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.Contract.Quote;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -36,9 +38,14 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         this.clickHandler = clickHandler;
 
         dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        DecimalFormatSymbols symbols = dollarFormat.getDecimalFormatSymbols();
+        symbols.setCurrencySymbol("");
+        dollarFormat.setDecimalFormatSymbols(symbols);
+
         dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
         dollarFormatWithPlus.setPositivePrefix("+");
         dollarFormatWithPlus.setNegativePrefix("-");
+
         percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
         percentageFormat.setMaximumFractionDigits(2);
         percentageFormat.setMinimumFractionDigits(2);
@@ -70,10 +77,12 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         cursor.moveToPosition(position);
 
         holder.name.setText(cursor.getString(Quote.POSITION_STOCK_NAME));
+
         holder.symbolAndExchangeName.setText(
                 String.format(context.getResources().getString(R.string.symbol_and_exchange_name),
                 cursor.getString(Quote.POSITION_SYMBOL),
                 cursor.getString(Quote.POSITION_EXCHANGE_NAME)));
+
         holder.price.setText(String.format(context.getString(R.string.price),
                 dollarFormat.format(cursor.getFloat(Quote.POSITION_PRICE))));
 
@@ -83,15 +92,11 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
         if (rawAbsoluteChange > 0) {
             if (VERSION.SDK_INT >= VERSION_CODES.M) {
-                holder.change.setTextColor(context.getColor(R.color.material_green_700));
-            } else {
-                holder.change.setTextColor(context.getResources().getColor(R.color.material_green_700));
+                holder.change.setTextColor(ContextCompat.getColor(context, R.color.material_green_900));
             }
         } else {
             if (VERSION.SDK_INT >= VERSION_CODES.M) {
-                holder.change.setTextColor(context.getColor(R.color.material_red_700));
-            } else {
-                holder.change.setTextColor(context.getResources().getColor(R.color.material_red_700));
+                holder.change.setTextColor(ContextCompat.getColor(context, R.color.material_red_700));
             }
         }
 

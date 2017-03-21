@@ -36,7 +36,7 @@
         %1$s\t\t(%2$s)
     </string>
     <string name="price">
-        %s\tUSD
+        %s\t\tUSD
     </string>
     <string name="change">
         %1$s\t(%2$s)

@@ -17,8 +17,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -206,36 +204,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<Cursor> loader) {
         swipeRefreshLayout.setRefreshing(false);
         adapter.setCursor(null);
-    }
-
-
-    private void setDisplayModeMenuItemIcon(MenuItem item) {
-        if (PrefUtils.getDisplayMode(this)
-                .equals(getString(R.string.pref_display_mode_absolute_key))) {
-            item.setIcon(R.drawable.ic_percentage);
-        } else {
-            item.setIcon(R.drawable.ic_dollar);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_settings, menu);
-        MenuItem item = menu.findItem(R.id.action_change_units);
-        setDisplayModeMenuItemIcon(item);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_change_units) {
-            PrefUtils.toggleDisplayMode(this);
-            setDisplayModeMenuItemIcon(item);
-            adapter.notifyDataSetChanged();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
