@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/stock_item"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/StockNameTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        tools:text="Alphabet"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/symbol_and_exchange_name"
+        style="@style/SymbolAndExchangeName"
+        android:layout_below="@id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_alignLeft="@id/name"
+        tools:text="GOOGL"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/price"
+        style="@style/BidPriceTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        tools:text="1000.00"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/change"
+        style="@style/PercentChangeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/price"
+        android:layout_alignRight="@id/price"
+        android:textSize="14sp"
+        tools:text="100%"
+        android:layout_marginTop="4dp"/>
+
+
+</RelativeLayout>
