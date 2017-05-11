@@ -2,12 +2,15 @@ package com.udacity.stockhawk.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -25,7 +28,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
-import com.udacity.stockhawk.widget.RemoteStockService;
+import com.udacity.stockhawk.utilities.Utilities;
 import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import java.io.IOException;
@@ -47,9 +50,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.error)
     TextView error;
+    @BindView(R.id.tv_last_update_time)
+    TextView tvLastUpdateTime;
     private StockAdapter adapter;
 
-    private Intent mRemoteStockService;
 
     public static final int MSG_WHAT_STOCK_NOT_EXIST = 0x01;
     public static final int MSG_WHAT_ADD_STOCK = 0X02;
@@ -123,7 +127,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         }).attachToRecyclerView(stockRecyclerView);
 
-        mRemoteStockService = new Intent(this, RemoteStockService.class);
+
+        String lastUpdateTime = PreferenceManager.getDefaultSharedPreferences(this).getString("last_update", null);
+        if (null != lastUpdateTime) {
+            tvLastUpdateTime.setText(String.format(getString(R.string.last_refresh_time),lastUpdateTime));
+        }
     }
 
     private boolean networkUp() {
@@ -204,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         adapter.setCursor(data);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putString("last_update", Utilities.formatDate(SystemClock.currentThreadTimeMillis())).apply();
         sendBroadcast(new Intent().setAction(StockWidgetProvider.ACTION_UPDATE));
     }
 

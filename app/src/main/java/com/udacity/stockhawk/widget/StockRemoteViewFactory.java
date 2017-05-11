@@ -91,12 +91,12 @@ public class StockRemoteViewFactory implements RemoteViewsFactory {
 
         remoteViews.setTextViewText(R.id.price, String.format(mContext.getString(R.string.price),
 
-                Utilities.getDollorFormat().format(mCursor.getFloat(Contract.Quote.POSITION_PRICE))));
+                Utilities.getDollarFormat().format(mCursor.getFloat(Contract.Quote.POSITION_PRICE))));
 
         float rawAbsoluteChange = mCursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
         float percentageChange = mCursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
 
-        String change = Utilities.getDollorFormatWithPlus().format(rawAbsoluteChange);
+        String change = Utilities.getDollarFormatWithPlus().format(rawAbsoluteChange);
         String percentage = Utilities.getPercentageFormat().format(percentageChange / 100);
 
         remoteViews.setTextViewText(R.id.change, String.format(mContext.getResources().getString(R.string.change),

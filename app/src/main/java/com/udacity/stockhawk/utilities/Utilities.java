@@ -66,7 +66,7 @@ public class Utilities {
         return String.format("%.2f", price);
     }
 
-    public static DecimalFormat getDollorFormatWithPlus () {
+    public static DecimalFormat getDollarFormatWithPlus() {
 
         DecimalFormat dollarFormatWithPlus;
         dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
@@ -76,7 +76,7 @@ public class Utilities {
         return dollarFormatWithPlus;
     }
 
-    public static DecimalFormat getDollorFormat () {
+    public static DecimalFormat getDollarFormat() {
 
         DecimalFormat dollarFormat;
         dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
