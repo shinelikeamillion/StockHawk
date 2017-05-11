@@ -2,10 +2,14 @@ package com.udacity.stockhawk.utilities;
 
 import com.udacity.stockhawk.StockHistories;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import lecho.lib.hellocharts.model.PointValue;
 
@@ -60,6 +64,38 @@ public class Utilities {
 
     public static String formatPrice (float price) {
         return String.format("%.2f", price);
+    }
+
+    public static DecimalFormat getDollorFormatWithPlus () {
+
+        DecimalFormat dollarFormatWithPlus;
+        dollarFormatWithPlus = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        dollarFormatWithPlus.setPositivePrefix("+");
+        dollarFormatWithPlus.setNegativePrefix("-");
+
+        return dollarFormatWithPlus;
+    }
+
+    public static DecimalFormat getDollorFormat () {
+
+        DecimalFormat dollarFormat;
+        dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        DecimalFormatSymbols symbols = dollarFormat.getDecimalFormatSymbols();
+        symbols.setCurrencySymbol("");
+        dollarFormat.setDecimalFormatSymbols(symbols);
+
+        return dollarFormat;
+    }
+
+    public static DecimalFormat getPercentageFormat () {
+
+        DecimalFormat percentageFormat;
+        percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
+        percentageFormat.setMaximumFractionDigits(2);
+        percentageFormat.setMinimumFractionDigits(2);
+        percentageFormat.setPositivePrefix("+");
+
+        return percentageFormat;
     }
 
 }

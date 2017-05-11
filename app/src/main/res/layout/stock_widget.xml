@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
         android:text="@string/app_name"/>
 
     <ListView

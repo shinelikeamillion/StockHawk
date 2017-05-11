@@ -25,6 +25,8 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.widget.RemoteStockService;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import java.io.IOException;
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @BindView(R.id.error)
     TextView error;
     private StockAdapter adapter;
+
+    private Intent mRemoteStockService;
 
     public static final int MSG_WHAT_STOCK_NOT_EXIST = 0x01;
     public static final int MSG_WHAT_ADD_STOCK = 0X02;
@@ -118,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
             }
         }).attachToRecyclerView(stockRecyclerView);
+
+        mRemoteStockService = new Intent(this, RemoteStockService.class);
     }
 
     private boolean networkUp() {
@@ -197,6 +203,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.GONE);
         }
         adapter.setCursor(data);
+
+        sendBroadcast(new Intent().setAction(StockWidgetProvider.ACTION_UPDATE));
     }
 
 

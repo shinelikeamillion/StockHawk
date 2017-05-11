@@ -3,11 +3,18 @@ package com.udacity.stockhawk.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.data.Contract;
+import com.udacity.stockhawk.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +31,7 @@ public class StockRemoteViewFactory implements RemoteViewsFactory {
     private List<Stock> mStocks = new ArrayList<>();
     private Context mContext;
     private int mAppWidgetId;
+    Cursor mCursor;
 
     public StockRemoteViewFactory (Context context, Intent intent) {
         mContext = context;
@@ -32,16 +40,25 @@ public class StockRemoteViewFactory implements RemoteViewsFactory {
 
     @Override
     public void onCreate() {
-        for (int i = 0; i < 10; i++) {
-            Stock stock = new Stock("hah");
-            stock.setName("hah"+i);
-            mStocks.add(stock);
-        }
+        // doing nothing～
     }
 
     @Override
     public void onDataSetChanged() {
+        if (mCursor != null) {
+            mCursor.close();
+            mCursor = null;
+        }
 
+        final long identityToken = Binder.clearCallingIdentity();
+
+        mCursor = mContext.getContentResolver().query(Contract.Quote.URI,
+                Contract.Quote.QUOTE_COLUMNS,
+                null,
+                null,
+                Contract.Quote.COLUMN_SYMBOL);
+
+        Binder.restoreCallingIdentity(identityToken);
     }
 
     @Override
@@ -51,21 +68,56 @@ public class StockRemoteViewFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return mStocks.size();
+        return mCursor != null ? mCursor.getCount() : 0;
     }
 
     @Override
-    public RemoteViews getViewAt(int i) {
+    public RemoteViews getViewAt(int position) {
+
+        if (position == AdapterView.INVALID_POSITION ||
+                mCursor == null
+                || !mCursor.moveToPosition(position)) {
+            return null;
+        }
 
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.stock_item);
 
-        remoteViews.setTextViewText(R.id.name, mStocks.get(i).getName());
-        remoteViews.setTextViewText(R.id.symbol_and_exchange_name, mStocks.get(i).getName());
-        remoteViews.setTextViewText(R.id.price, mStocks.get(i).getName());
-        remoteViews.setTextViewText(R.id.change, mStocks.get(i).getName());
+        remoteViews.setTextViewText(R.id.name, mCursor.getString(Contract.Quote.POSITION_STOCK_NAME));
+
+        remoteViews.setTextViewText(R.id.symbol_and_exchange_name,
+                String.format(mContext.getResources().getString(R.string.symbol_and_exchange_name),
+                        mCursor.getString(Contract.Quote.POSITION_SYMBOL),
+                        mCursor.getString(Contract.Quote.POSITION_EXCHANGE_NAME)));
+
+        remoteViews.setTextViewText(R.id.price, String.format(mContext.getString(R.string.price),
+
+                Utilities.getDollorFormat().format(mCursor.getFloat(Contract.Quote.POSITION_PRICE))));
+
+        float rawAbsoluteChange = mCursor.getFloat(Contract.Quote.POSITION_ABSOLUTE_CHANGE);
+        float percentageChange = mCursor.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
+
+        String change = Utilities.getDollorFormatWithPlus().format(rawAbsoluteChange);
+        String percentage = Utilities.getPercentageFormat().format(percentageChange / 100);
+
+        remoteViews.setTextViewText(R.id.change, String.format(mContext.getResources().getString(R.string.change),
+                change,
+                percentage));
+
+        if (rawAbsoluteChange > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                remoteViews.setTextColor(R.id.change, ContextCompat.getColor(mContext, R.color.material_green_900));
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                remoteViews.setTextColor(R.id.change, ContextCompat.getColor(mContext, R.color.material_red_700));
+            }
+        }
 
         Bundle bundle = new Bundle();
-        bundle.putInt(StockWidgetProvider.EXTRA_ITEM, i);
+        int symbolColumn = mCursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
+        bundle.putString(Contract.Quote.COLUMN_SYMBOL, mCursor.getString(symbolColumn));
         Intent fillInIntent = new Intent();
 
         fillInIntent.putExtras(bundle);

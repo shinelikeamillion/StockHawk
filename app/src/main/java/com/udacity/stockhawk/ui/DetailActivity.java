@@ -96,6 +96,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 && historyData == null) {
 
             historyData = data.getString(Quote.POSITION_HISTORY);
+
+            getSupportActionBar().setTitle(data.getString(Quote.POSITION_STOCK_NAME));
+
             Timber.d("eee", historyData);
             setUpLineChart();
         }

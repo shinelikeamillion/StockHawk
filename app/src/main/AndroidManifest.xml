@@ -45,7 +45,8 @@
         <receiver android:name=".widget.StockWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.stock.udacity.CLLECTION_VIEW.ACTION"/>
+                <action android:name="com.stock.udacity.stockwidget.action.update"/>
+                <action android:name="com.stock.udacity.stockwidget.action.view"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/stock_widget_info"/>

@@ -3,18 +3,19 @@ package com.udacity.stockhawk.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.data.Contract;
+import com.udacity.stockhawk.ui.DetailActivity;
 
 public class StockWidgetProvider extends AppWidgetProvider{
 
-    public static final String COLLECTION_VIEW_ACTION = "com.stock.udacity.CLLECTION_VIEW.ACTION";
-    public static final String EXTRA_ITEM = "com.stock.udacity.stockwidget.EXTRA_ITEM";
+    public static final String ACTION_VIEW_DETAIL = "com.stock.udacity.stockwidget.action.view";
+    public static final String ACTION_UPDATE = "com.stock.udacity.stockwidget.action.update";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -27,7 +28,7 @@ public class StockWidgetProvider extends AppWidgetProvider{
             stocksView.setRemoteAdapter(R.id.ls_stocks, stockService);
 
             Intent stockIntent = new Intent();
-            stockIntent.setAction(COLLECTION_VIEW_ACTION);
+            stockIntent.setAction(ACTION_VIEW_DETAIL);
             stockIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, stockIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -43,16 +44,21 @@ public class StockWidgetProvider extends AppWidgetProvider{
     public void onReceive(Context context, Intent intent) {
 
         String action = intent.getAction();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-        if (action.equals(COLLECTION_VIEW_ACTION)) {
-            Toast.makeText(context, "clicked item ", Toast.LENGTH_SHORT).show();
+        if (action.equals(ACTION_VIEW_DETAIL)) {
+
+            String symbol = intent.getExtras().getString(Contract.Quote.COLUMN_SYMBOL);
+            intent.setData(Contract.Quote.makeUriForStock(symbol));
+            intent.setClass(context, DetailActivity.class);
+            context.startActivity(intent);
+
+        } else if (action.equals(ACTION_UPDATE)) {
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ls_stocks);
         }
 
         super.onReceive(context, intent);
-    }
-
-    private void setRemoteAdapter(Context context, @NonNull RemoteViews views) {
-        views.setRemoteAdapter(R.id.dialog_stock, new Intent(context, StockWidgetProvider.class));
     }
 }
