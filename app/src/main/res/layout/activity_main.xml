@@ -7,31 +7,28 @@
     android:orientation="vertical"
     tools:context="com.udacity.stockhawk.ui.MainActivity">
 
+    <TextView
+        android:id="@+id/tv_last_update_time"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:textDirection="locale"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
+        tools:text="2004/11/5"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_below="@id/tv_last_update_time"
+        android:layout_height="match_parent"
+        android:layout_marginTop="26dp">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_last_update_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
-                tools:text="2004/11/5"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -44,6 +41,7 @@
         android:onClick="button"
         android:src="@drawable/fab_plus"
         app:backgroundTint="@color/material_blue_500"
+        android:contentDescription="@string/content_for_add_stock_button"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
