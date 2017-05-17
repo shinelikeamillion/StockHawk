@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="0.5dp"
-    android:layout_marginBottom="0.5dp"
+    android:layout_marginTop="@dimen/weight_divider_margin"
+    android:layout_marginBottom="@dimen/weight_divider_margin"
     android:background="@drawable/widget_item_shape">
 
     <TextView
@@ -14,9 +14,9 @@
         style="@style/StockNameForWidgetTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/normal_10dp"
         tools:text="Alphabet"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="@dimen/normal_4dp"/>
 
     <TextView
         android:id="@+id/symbol_and_exchange_name"
@@ -24,10 +24,10 @@
         android:layout_below="@id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="@dimen/normal_4dp"
         android:layout_alignStart="@id/name"
         tools:text="GOOGL"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="@dimen/normal_4dp"/>
 
     <TextView
         android:id="@+id/price"
@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         tools:text="1000.00"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginTop="@dimen/normal_4dp"
+        android:layout_marginEnd="@dimen/normal_10dp"/>
 
     <TextView
         android:id="@+id/change"
@@ -47,7 +47,7 @@
         android:layout_below="@id/price"
         android:layout_alignEnd="@id/price"
         tools:text="100%"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="@dimen/normal_4dp"/>
 
 
 </RelativeLayout>

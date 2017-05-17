@@ -13,8 +13,8 @@
 
     <lecho.lib.hellocharts.view.LineChartView
         android:id="@+id/lineChart"
-        android:paddingLeft="16dp"
+        android:paddingLeft="@dimen/detail_chart_margin_left"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="@dimen/detail_chart_height"/>
 
 </LinearLayout>

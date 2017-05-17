@@ -10,9 +10,9 @@
     <TextView
         android:id="@+id/tv_last_update_time"
         android:layout_width="match_parent"
-        android:layout_height="26dp"
+        android:layout_height="@dimen/update_time_view_height"
         android:background="@color/colorPrimary"
-        android:elevation="4dp"
+        android:elevation="@dimen/update_time_elevation"
         android:textDirection="locale"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.PopupMenu.Small"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/tv_last_update_time"
         android:layout_height="match_parent"
-        android:layout_marginTop="26dp">
+        android:layout_marginTop="@dimen/update_time_view_height">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -42,13 +42,14 @@
         android:src="@drawable/fab_plus"
         app:backgroundTint="@color/material_blue_500"
         android:contentDescription="@string/content_for_add_stock_button"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
+        app:borderWidth="@dimen/fab_border_width"
+        app:elevation="@dimen/fab_elevation"
         app:fabSize="normal"
-        app:pressedTranslationZ="12dp" />
+        app:pressedTranslationZ="@dimen/fab_press_elevation" />
 
     <TextView
         android:id="@+id/error"
+        android:padding="@dimen/error_message_padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

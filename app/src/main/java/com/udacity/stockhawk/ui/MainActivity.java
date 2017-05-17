@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }).attachToRecyclerView(stockRecyclerView);
 
 
-        String lastUpdateTime = PreferenceManager.getDefaultSharedPreferences(this).getString("last_update", null);
-        if (null != lastUpdateTime) {
-            tvLastUpdateTime.setText(String.format(getString(R.string.last_refresh_time),lastUpdateTime));
+        long lastUpdateTime = PreferenceManager.getDefaultSharedPreferences(this).getLong("last_update", 0);
+        if (0 != lastUpdateTime) {
+            tvLastUpdateTime.setText(String.format(getString(R.string.last_refresh_time), Utilities.getUpdateTimeName(lastUpdateTime)));
         }
     }
 
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             swipeRefreshLayout.setRefreshing(false);
             Toast.makeText(this, R.string.toast_no_connectivity, Toast.LENGTH_LONG).show();
         } else if (PrefUtils.getStocks(this).size() == 0) {
-            Timber.d("WHYAREWEHERE");
+            Timber.d("WHY ARE WE HERE");
             swipeRefreshLayout.setRefreshing(false);
             error.setText(getString(R.string.error_no_stocks));
             error.setVisibility(View.VISIBLE);
@@ -209,12 +209,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (data.getCount() != 0) {
             error.setVisibility(View.GONE);
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            sharedPreferences.edit().putLong("last_update", System.currentTimeMillis()).apply();
+            sendBroadcast(new Intent().setAction(StockWidgetProvider.ACTION_UPDATE));
         }
         adapter.setCursor(data);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.edit().putString("last_update", Utilities.formatDate(System.currentTimeMillis())).apply();
-        sendBroadcast(new Intent().setAction(StockWidgetProvider.ACTION_UPDATE));
     }
 
 

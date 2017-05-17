@@ -7,44 +7,44 @@
     </style>
 
     <style name="PercentChangeTextStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">@dimen/text_size_for_percent_change</item>
+        <item name="android:textColor">@color/colorPrice</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="BidPriceTextStyle">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">@dimen/text_size_for_bid_price</item>
+        <item name="android:textColor">@color/colorPrice</item>
     </style>
 
     <style name="StockNameTextStyle">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#424242</item>
+        <item name="android:textSize">@dimen/text_size_for_stock_name</item>
+        <item name="android:textColor">@color/colorName</item>
     </style>
 
     <style name="SymbolAndExchangeName">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/text_size_for_symbolandexchengname</item>
         <item name="android:textColor">#757575</item>
     </style>
 
     <style name="PercentChangeForWidgetTextStyle">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">@dimen/text_size_for_widget_change</item>
+        <item name="android:textColor">@color/colorPrice</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="BidPriceForWidgetTextStyle">
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">@dimen/text_size_for_widget_price</item>
+        <item name="android:textColor">@color/colorPrice</item>
     </style>
 
     <style name="StockNameForWidgetTextStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#424242</item>
+        <item name="android:textSize">@dimen/text_size_for_widget_name</item>
+        <item name="android:textColor">@color/colorName</item>
     </style>
 
     <style name="SymbolAndExchangeNameForWidgetTextStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#757575</item>
+        <item name="android:textSize">@dimen/text_size_for_widget_exchangename</item>
+        <item name="android:textColor">@color/colorPrice</item>
     </style>
 </resources>

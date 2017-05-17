@@ -1,4 +1,31 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="normal_4dp">4dp</dimen>
+    <dimen name="normal_10dp">10dp</dimen>
+
+    <dimen name="weight_divider_margin">0.5dp</dimen>
+
+    <dimen name="error_message_padding">10dp</dimen>
+
+    <dimen name="update_time_view_height">26dp</dimen>
+    <dimen name="update_time_elevation">4dp</dimen>
+
+    <dimen name="fab_border_width">0dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_press_elevation">12dp</dimen>
+
+    <dimen name="detail_chart_margin_left">16dp</dimen>
+    <dimen name="detail_chart_height">300dp</dimen>
+
+    <dimen name="text_size_for_percent_change">14sp</dimen>
+    <dimen name="text_size_for_bid_price">17sp</dimen>
+    <dimen name="text_size_for_stock_name">18sp</dimen>
+    <dimen name="text_size_for_symbolandexchengname">16sp</dimen>
+
+    <dimen name="text_size_for_widget_name">16sp</dimen>
+    <dimen name="text_size_for_widget_price">15sp</dimen>
+    <dimen name="text_size_for_widget_change">12sp</dimen>
+    <dimen name="text_size_for_widget_exchangename">14sp</dimen>
 </resources>

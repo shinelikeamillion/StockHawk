@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,6 +97,33 @@ public class Utilities {
         percentageFormat.setPositivePrefix("+");
 
         return percentageFormat;
+    }
+
+    public static String getUpdateTimeName (long dateLong) {
+
+        Date inputDate = new Date(dateLong);
+        Date todayDate = new Date();
+
+        long delta = (todayDate.getTime() - inputDate.getTime()) / 1000;
+        // seconds
+        if (delta <= 0) return "seconds ago";
+        // months
+        long tempTime;
+        tempTime = delta / (60 * 60 * 24 * 30);
+        if (tempTime > 0) return tempTime + " months ago";
+        // weeks
+        tempTime = delta / (60 * 60 * 24 * 7);
+        if (tempTime > 0) return tempTime + " weeks ago";
+        // days
+        tempTime = delta / (60 * 60 * 24);
+        if (tempTime > 0) return tempTime + " days ago";
+        // hours
+        tempTime = delta / (60 * 60);
+        if (tempTime > 0) return tempTime + " hours ago";
+        // minutes
+        tempTime = delta / 60;
+        if (tempTime > 0) return  tempTime + " minutes ago";
+        return "seconds ago";
     }
 
 }
