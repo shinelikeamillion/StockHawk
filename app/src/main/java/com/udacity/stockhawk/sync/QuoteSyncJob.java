@@ -36,7 +36,6 @@ public final class QuoteSyncJob {
     private static final int PERIOD = 300000;
     private static final int INITIAL_BACKOFF = 10000;
     private static final int PERIODIC_ID = 1;
-    private static final int YEARS_OF_HISTORY = 35;
 
     private QuoteSyncJob() {
     }
@@ -47,7 +46,7 @@ public final class QuoteSyncJob {
 
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
-        from.add(Calendar.DAY_OF_YEAR, -YEARS_OF_HISTORY);
+        from.add(Calendar.MONTH, -2);
 
         try {
 
