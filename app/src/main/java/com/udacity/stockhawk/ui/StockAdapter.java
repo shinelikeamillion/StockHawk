@@ -72,10 +72,14 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         if (rawAbsoluteChange > 0) {
             if (VERSION.SDK_INT >= VERSION_CODES.M) {
                 holder.change.setTextColor(ContextCompat.getColor(context, R.color.material_green_900));
+            } else {
+                holder.change.setTextColor(context.getResources().getColor(R.color.material_green_900));
             }
         } else {
             if (VERSION.SDK_INT >= VERSION_CODES.M) {
                 holder.change.setTextColor(ContextCompat.getColor(context, R.color.material_red_700));
+            } else {
+                holder.change.setTextColor(context.getResources().getColor(R.color.material_red_700));
             }
         }
 
