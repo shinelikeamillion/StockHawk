@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.utilities.CircularRevealAnimation;
@@ -64,7 +65,14 @@ public class AddStockDialog extends DialogFragment {
         builder.setPositiveButton(getString(R.string.dialog_add),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        addStock();
+
+                        if (stock.getText().toString().isEmpty()) {
+
+                            Toast.makeText(getActivity(), R.string.toast_require_name, Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            addStock();
+                        }
                     }
                 });
         builder.setNegativeButton(getString(R.string.dialog_cancel), null);

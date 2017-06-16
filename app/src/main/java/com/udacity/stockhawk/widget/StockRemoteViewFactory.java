@@ -107,11 +107,15 @@ public class StockRemoteViewFactory implements RemoteViewsFactory {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 remoteViews.setTextColor(R.id.change, ContextCompat.getColor(mContext, R.color.material_green_900));
+            } else {
+                remoteViews.setTextColor(R.id.change, mContext.getResources().getColor(R.color.material_green_900));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 remoteViews.setTextColor(R.id.change, ContextCompat.getColor(mContext, R.color.material_red_700));
+            } else {
+                remoteViews.setTextColor(R.id.change, mContext.getResources().getColor(R.color.material_red_700));
             }
         }
 

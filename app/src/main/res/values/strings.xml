@@ -1,25 +1,25 @@
 <resources>
-    <string name="app_name">Stock Hawk</string>
+    <string name="app_name" translatable="false">Stock Hawk</string>
 
     <string name="pref_stocks_initialized_key" translatable="false">initialized</string>
 
-    <string name="pref_stocks_key">stocks</string>
+    <string name="pref_stocks_key" translatable="false">stocks</string>
 
     <string name="last_refresh_time"> Updated: %s</string>
 
-    <string name="pref_display_mode_key">displayMode</string>
-    <string name="pref_display_mode_default">@string/pref_display_mode_percentage_key</string>
+    <string name="pref_display_mode_key" translatable="false">displayMode</string>
+    <string name="pref_display_mode_default" translatable="false">@string/pref_display_mode_percentage_key</string>
 
-    <string name="pref_display_mode_absolute_key">absolute</string>
-    <string name="pref_display_mode_percentage_key">percentage</string>
+    <string name="pref_display_mode_absolute_key" translatable="false">absolute</string>
+    <string name="pref_display_mode_percentage_key" translatable="false">percentage</string>
 
-    <string name="default_stocks_yahoo">YHOO</string>
-    <string name="default_stocks_apple">AAPL</string>
-    <string name="default_stocks_microsoft">MSFT</string>
-    <string name="default_stocks_facebook">FB</string>
+    <string name="default_stocks_yahoo" translatable="false">YHOO</string>
+    <string name="default_stocks_apple" translatable="false">AAPL</string>
+    <string name="default_stocks_microsoft" translatable="false">MSFT</string>
+    <string name="default_stocks_facebook" translatable="false">FB</string>
 
 
-    <string name="action_change_units">@string/pref_display_mode_key</string>
+    <string name="action_change_units" translatable="false">@string/pref_display_mode_key</string>
 
     <string name="content_for_add_stock_button">add stock</string>
 
@@ -33,15 +33,24 @@
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
+    <string name="toast_require_name">Stock name required</string>
+    <string name="toast_found_not_exit">What you found not exist</string>
 
-    <string name="symbol_and_exchange_name">
+    <string name="symbol_and_exchange_name" translatable="false">
         %1$s\t\t(%2$s)
     </string>
-    <string name="price">
+    <string name="price" translatable="false">
         %s\t\tUSD
     </string>
-    <string name="change">
+    <string name="change" translatable="false">
         %1$s\t(%2$s)
     </string>
 
+
+    <string name="seconds_ago">seconds ago</string>
+    <string name="minutes_ago"> minutes ago</string>
+    <string name="hours_ago"> hours ago</string>
+    <string name="days_ago"> days ago</string>
+    <string name="weeks_ago"> weeks ago</string>
+    <string name="month_ago"> months ago</string>
 </resources>

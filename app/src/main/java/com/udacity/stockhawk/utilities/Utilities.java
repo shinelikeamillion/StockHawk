@@ -1,5 +1,8 @@
 package com.udacity.stockhawk.utilities;
 
+import android.content.Context;
+
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.StockHistories;
 
 import java.text.DecimalFormat;
@@ -99,31 +102,31 @@ public class Utilities {
         return percentageFormat;
     }
 
-    public static String getUpdateTimeName (long dateLong) {
+    public static String getUpdateTimeName (Context context, long dateLong) {
 
         Date inputDate = new Date(dateLong);
         Date todayDate = new Date();
 
         long delta = (todayDate.getTime() - inputDate.getTime()) / 1000;
         // seconds
-        if (delta <= 0) return "seconds ago";
+        if (delta <= 0) return context.getResources().getString(R.string.seconds_ago);
         // months
         long tempTime;
         tempTime = delta / (60 * 60 * 24 * 30);
-        if (tempTime > 0) return tempTime + " months ago";
+        if (tempTime > 0) return tempTime + context.getResources().getString(R.string.month_ago);
         // weeks
         tempTime = delta / (60 * 60 * 24 * 7);
-        if (tempTime > 0) return tempTime + " weeks ago";
+        if (tempTime > 0) return tempTime + context.getResources().getString(R.string.weeks_ago);
         // days
         tempTime = delta / (60 * 60 * 24);
-        if (tempTime > 0) return tempTime + " days ago";
+        if (tempTime > 0) return tempTime + context.getResources().getString(R.string.days_ago);
         // hours
         tempTime = delta / (60 * 60);
-        if (tempTime > 0) return tempTime + " hours ago";
+        if (tempTime > 0) return tempTime + context.getResources().getString(R.string.hours_ago);
         // minutes
         tempTime = delta / 60;
-        if (tempTime > 0) return  tempTime + " minutes ago";
-        return "seconds ago";
+        if (tempTime > 0) return  tempTime + context.getResources().getString(R.string.minutes_ago);
+        return context.getResources().getString(R.string.seconds_ago);
     }
 
 }

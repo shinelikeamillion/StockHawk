@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toast_no_connectivity">网络可用后刷新数据</string>
+    <string name="toast_stock_added_no_connectivity">网络可用后添加股票 %s</string>
+    <string name="last_refresh_time">更新时间: %s</string>
+    <string name="error_no_stocks">还未添加股票，点击添加按钮添加一个</string>
+    <string name="error_no_network">网络可用后加载数据</string>
+    <string name="dialog_title">添加股票</string>
+    <string name="dialog_hint">示例：GOOG</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_add">添加</string>
+    <string name="content_for_add_stock_button">添加股票</string>
+    <string name="toast_found_not_exit">未找到你想添加的股票</string>
+    <string name="toast_require_name">请输入股票信息</string>
+    <string name="hours_ago">小时之前</string>
+    <string name="days_ago">天之前</string>
+    <string name="minutes_ago">分钟之前</string>
+    <string name="month_ago">月之前</string>
+    <string name="seconds_ago">秒之前</string>
+</resources>

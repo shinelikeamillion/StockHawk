@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             switch (msg.what) {
                 case MSG_WHAT_STOCK_NOT_EXIST: {
-                    Toast.makeText(MainActivity.this, "what you found not exist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.toast_found_not_exit, Toast.LENGTH_SHORT).show();
                     break;
                 }
                 case MSG_WHAT_ADD_STOCK:{
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         long lastUpdateTime = PreferenceManager.getDefaultSharedPreferences(this).getLong("last_update", 0);
         if (0 != lastUpdateTime) {
-            tvLastUpdateTime.setText(String.format(getString(R.string.last_refresh_time), Utilities.getUpdateTimeName(lastUpdateTime)));
+            tvLastUpdateTime.setText(String.format(getString(R.string.last_refresh_time), Utilities.getUpdateTimeName(this, lastUpdateTime)));
         }
     }
 
@@ -175,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 public void run() {
                     try {
                         Stock sk = YahooFinance.get(symbol);
-                        if (sk.getQuote().getPrice() == null) {
+                        if (sk == null ||
+                                (sk != null && sk.getQuote().getPrice() == null)) {
                             Timber.e("there is a null");
                             addStockHandler.sendEmptyMessage(MSG_WHAT_STOCK_NOT_EXIST);
                         } else {
@@ -191,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 }
             }.start();
+
+        } else {
 
         }
     }
